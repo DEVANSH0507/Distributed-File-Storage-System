@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Distributed File System</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>📁 Distributed File System</h1>
+
+  <div class="upload-section">
+    <input type="file" id="fileInput" />
+    <button onclick="uploadFile()">Upload</button>
+  </div>
+
+  <h2>📄 Uploaded Files</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th># Chunks</th>
+        <th>Download</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="fileTableBody">
+      <!-- File rows will be injected here -->
+    </tbody>
+  </table>
+
+  <h3>🖥️ Node Status</h3>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Chunks</th>
+    <th>Download</th>
+    <th>Delete</th>
+    <th>Heal</th>
+  </tr>
+</thead>
+  <tbody id="nodeStatusTableBody"></tbody>
+</table>
+
+
+
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
