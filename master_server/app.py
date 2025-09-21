@@ -8,11 +8,11 @@ app = FastAPI()
 CHUNK_SIZE = 1024 * 1024  # 1MB
 NODES = ["../chunk_nodes/node1", "../chunk_nodes/node2", "../chunk_nodes/node3"]
 
-# Ensure node directories exist
+#  node directories exist
 for node in NODES:
     os.makedirs(node, exist_ok=True)
 
-# Utility: load metadata.json
+# load metadata.json
 def load_metadata():
     if not os.path.exists("metadata.json"):
         with open("metadata.json", "w") as f:
@@ -20,7 +20,7 @@ def load_metadata():
     with open("metadata.json", "r") as f:
         return json.load(f)
 
-# Utility: save metadata.json
+# save metadata.json
 def save_metadata(metadata):
     with open("metadata.json", "w") as f:
         json.dump(metadata, f, indent=2)
@@ -81,7 +81,7 @@ import os
 
 from fastapi.responses import JSONResponse
 
-from fastapi.responses import JSONResponse
+
 
 @app.get("/download/{file_id}")
 def download_file(file_id: str):
@@ -116,7 +116,7 @@ def download_file(file_id: str):
             if not found:
                 raise HTTPException(status_code=500, detail=f"Missing chunk: {chunk_id}")
 
-    # ✅ Instead of streaming, return URL
+
     return JSONResponse({
         "status": "success",
         "download_url": f"/static/downloads/{safe_filename}"
@@ -199,7 +199,7 @@ def heal_file(file_id: str):
         existing_node = None
         existing_path: str | None = None
 
-        # ✅ Step 1: Find a good existing replica
+       
         for node in nodes:
             chunk_path = os.path.join(node, chunk_name)
             if os.path.exists(chunk_path):
@@ -207,17 +207,17 @@ def heal_file(file_id: str):
                 existing_path = chunk_path
                 break
 
-        # ✅ Step 2: Validate existing replica exists
+        #  Validate existing replica exists
         if not existing_path or not os.path.exists(existing_path):
             continue  # No good source for healing
 
-        # ✅ Step 3: Identify missing replicas
+        # identify missing replicas
         missing_nodes = [n for n in NODES if not os.path.exists(os.path.join(n, chunk_name))]
 
-        # ✅ Step 4: Heal into missing nodes
+        # Heal into missing nodes
         for target_node in missing_nodes:
             if target_node == existing_node:
-                continue  # Skip already good one
+                continue  
 
             target_path = os.path.join(target_node, chunk_name)
             try:
@@ -227,7 +227,7 @@ def heal_file(file_id: str):
                 print(f"Error healing chunk {chunk_name} to {target_node}: {e}")
                 continue
 
-            # Avoid duplicate metadata entries
+            # avoid duplicate metadata entries
             if not any(c["chunk"] == chunk_name and c["node"] == target_node for c in metadata[file_id]["chunks"]):
                 metadata[file_id]["chunks"].append({
                     "chunk": chunk_name,
