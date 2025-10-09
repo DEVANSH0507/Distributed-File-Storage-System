@@ -2,6 +2,9 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse
 import os, time, json
 from collections import defaultdict
+from datetime import datetime
+
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -73,13 +76,7 @@ async def upload_file(file: UploadFile = File(...)):
 
 # ---------------------------- DOWNLOAD ---------------------------- #
 
-from datetime import datetime
-from fastapi.responses import FileResponse
-from collections import defaultdict
-from fastapi import HTTPException
-import os
 
-from fastapi.responses import JSONResponse
 
 
 
